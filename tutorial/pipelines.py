@@ -15,6 +15,7 @@ class TutorialPipeline(object):
         self.file = codecs.open('items.csv', 'w', encoding='GBK')
     def process_item(self, item, spider):
         line = json.dumps(dict(item), ensure_ascii=False) + "\n"
+        print line
         self.file.write(line)
         return item
     def spider_closed(self, spider):

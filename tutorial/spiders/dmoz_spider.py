@@ -3,20 +3,21 @@ import scrapy
 from tutorial.items import DmozItem
 
 class DmozSpider(scrapy.Spider):
-    name = "dmoz"
-    allowed_domains = ["w3school.com.cn"]
+    name = "cnbeta"
+    allowed_domains = ["cnbeta.com"]
     start_urls = [
-        "http://www.w3school.com.cn/xpath/xpath_syntax.asp"
+        "http://www.cnbeta.com/"
     ]
 
     def parse(self, response):
         items = []
-        for sel in response.xpath('//div[@id="course"]/ul[1]/li'):
+        for sel in response.xpath('//*[@id="hot"]/dl'):
             #title = sel.xpath('a/text()').extract()
             #link = sel.xpath('a/@href').extract()
             item = DmozItem()
-            item['title'] = sel.xpath('a/text()').extract()
-            item['link'] = sel.xpath('a/@href').extract()
+            item['title'] = sel.xpath('dt/a/text()').extract()
+            item['link'] = sel.xpath('dt/a/@href').extract()
+            item['image_urls']=sel.xpath('dd/div/a/img/@src').extract()
             items.append(item)
         return items
         #, desc
