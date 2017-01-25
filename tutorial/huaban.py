@@ -6,6 +6,7 @@ import urllib, urllib2, re, sys, os
 
 import tkinter as tk
 from tkinter import ttk
+from Tkinter import *
 reload(sys)
 
 toEnd = False
@@ -43,6 +44,7 @@ def get_huaban_beauty(pid):
             print(len(groups))
             if len(groups) <= 0 :
                 print('没有图片！')
+
                 return
             maxid = groups[len(groups)-1][0]
             for att in groups:
@@ -65,22 +67,29 @@ def get_huaban_beauty(pid):
 
 ######################################GUI界面开始
 win = tk.Tk()
-win.title("Python GUI")    # 添加标题
-aLabel = ttk.Label(win, text="A Label")     # 创建一个标签, text：显示表现的内容
-aLabel.grid(column=0, row=0)
+win.title("花瓣画板图片下载")    # 添加标题
+# frame = Frame(win, width=200,height = 500)
+#
+# frame.pack()
+# frame.pack_propagate(0) # 使组件大小不变，此时width才起作用
+frame = LabelFrame(win, text="信息状态", width=2000, fg='darkgray') # 信息区
+frame.pack()
+frame.grid(row=1,column=0, sticky=N+S, padx=100, pady=100)
+
+frame.propagate(0) # 使组件大小不变，此时width才起作用
 
 def clickMe():   # 当acction被点击时,该函数则生效
     action.configure(text='Hello ' + name.get())     # 设置button显示的内容
     print(name.get())
     get_huaban_beauty(name.get())
 
-action = ttk.Button(win, text="Click Me!", command=clickMe)     # 创建一个按钮, text：显示按钮上面显示的文字, command：当这个按钮被点击之后会调用command函数
+action = ttk.Button(frame, text="Click Me!", command=clickMe)     # 创建一个按钮, text：显示按钮上面显示的文字, command：当这个按钮被点击之后会调用command函数
 action.grid(column=1, row=1)
 
-ttk.Label(win, text="Enter a name:").grid(column=0, row=0)
+ttk.Label(frame, text="Enter a name:").grid(column=0, row=0)
 
 name = tk.StringVar()     # StringVar是Tk库内部定义的字符串变量类型，在这里用于管理部件上面的字符；不过一般用在按钮button上。改变StringVar，按钮上的文字也随之改变。
-nameEntered = ttk.Entry(win, width=12, textvariable=name)   # 创建一个文本框，定义长度为12个字符长度，并且将文本框中的内容绑定到上一句定义的name变量上，方便clickMe调用
+nameEntered = ttk.Entry(frame, width=12, textvariable=name)   # 创建一个文本框，定义长度为12个字符长度，并且将文本框中的内容绑定到上一句定义的name变量上，方便clickMe调用
 nameEntered.grid(column=0, row=1)
 
 win.mainloop()      # 当调用mainloop()时,窗口才会显示出来
